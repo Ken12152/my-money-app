@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { selectTab } from '../common/tab/tabActions'
+import { selectTab, showTabs } from '../common/tab/tabActions'
 import Content from '../common/template/content'
 import ContentHeader from '../common/template/contentHeader'
 import Tabs from '../common/tab/tabs'
@@ -15,6 +15,7 @@ class BillingCycle extends Component {
 
     componentWillMount() {
         this.props.selectTab('tabList')
+        this.props.showTabs('tabList', 'tabCreate')
     }
 
     render() {
@@ -43,7 +44,7 @@ class BillingCycle extends Component {
 }
 
 const mapStateToProps = state => ({ tab: state.tab })
-const mapDispatchToProps = dispatch => bindActionCreators({selectTab}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ selectTab, showTabs }, dispatch)
 
 export default connect(
     mapStateToProps,
