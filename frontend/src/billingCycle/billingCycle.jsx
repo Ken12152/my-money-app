@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { selectTab, showTabs } from '../common/tab/tabActions'
-import { create, update } from './billingCycleActions'
+import { create, update, remove } from './billingCycleActions'
 
 import Content from '../common/template/content'
 import ContentHeader from '../common/template/contentHeader'
@@ -40,14 +40,19 @@ class BillingCycle extends Component {
                             </TabContent>
 
                             <TabContent id="tabCreate">
-                                <BillingCycleForm onSubmit={ this.props.create }/>
+                                <BillingCycleForm onSubmit={ this.props.create } 
+                                    submitLabel="Incluir" submitClass="info" />
                             </TabContent>
 
                             <TabContent id="tabUpdate">
-                                <BillingCycleForm onSubmit={ this.props.update }/>
+                                <BillingCycleForm onSubmit={ this.props.update } 
+                                    submitLabel="Atualizar" submitClass="warning" />
                             </TabContent>
 
-                            <TabContent id="tabDelete"><h1>Excluir</h1></TabContent>
+                            <TabContent id="tabDelete">
+                                <BillingCycleForm onSubmit={ this.props.remove } 
+                                    submitLabel="Remover" submitClass="danger" readOnly />
+                            </TabContent>
                         </TabsContent>
                     </Tabs>
                 </Content>
@@ -59,7 +64,7 @@ class BillingCycle extends Component {
 const mapStateToProps = state => ({ tab: state.tab })
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-    { selectTab, showTabs, create, update }, dispatch
+    { selectTab, showTabs, create, update, remove }, dispatch
 )
 
 export default connect(

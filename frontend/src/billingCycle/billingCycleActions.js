@@ -15,32 +15,24 @@ export function getList() {
 }
 
 export function create(values) {
-    return dispatch => {
-        axios.post(`${BASE_URL}/billingCycles`, values)
-            .then(response => {
-                toastr.success('Success', 'Operacao Realizada com Sucesso')
-                
-                dispatch(init())
-            })
-            .catch(e => {
-                e.response.data.errors.forEach(error => toastr.error('Error', error))
-            })
-    }
-}
-
-export function showUpdate(billingCycle) {
-    return [
-        showTabs('tabUpdate'),
-        selectTab('tabUpdate'),
-        initialize('billingCycleForm', billingCycle)
-    ]
+    return submit(values, 'post')
 }
 
 export function update(values) {
+    return submit(values, 'put')
+}
+
+export function remove(values) {
+    return submit(values, 'delete')
+}
+
+function submit(values, method) {
     return dispatch => {
-        axios.put(`${BASE_URL}/billingCycles/${values._id}`, values)
+        const id = values._id ? values._id : ''
+
+        axios[method](`${BASE_URL}/billingCycles/${id}`, values)
             .then(response => {
-                toastr.success('Success', 'Alterado')
+                toastr.success('Success', 'Opearacao Realizada com Sucesso')
 
                 dispatch(init())
             })
@@ -56,5 +48,13 @@ export function init() {
         showTabs('tabList', 'tabCreate'),
         selectTab('tabList'),
         initialize('billingCycleForm', INITIAL_VALUE)
+    ]
+}
+
+export function showTabWithData(tabName, billingCycle) {
+    return [
+        showTabs(tabName),
+        selectTab(tabName),
+        initialize('billingCycleForm', billingCycle)
     ]
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindAcitonCreators, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getList, showUpdate } from './billingCycleActions'
+import { getList, showTabWithData } from './billingCycleActions'
 
 class BillingCycle extends Component {
 
@@ -17,8 +17,11 @@ class BillingCycle extends Component {
                 <td>{ billingCycle.month }</td>
                 <td>{ billingCycle.year }</td>
                 <td>
-                    <button className="btn btn-warning" onClick={ () => this.props.showUpdate(billingCycle) }>
+                    <button className="btn btn-warning" onClick={ () => this.props.showTabWithData('tabUpdate', billingCycle) }>
                         <i className="fa fa-pencil"></i>
+                    </button>
+                    <button className="btn btn-danger" onClick={ () => this.props.showTabWithData('tabDelete', billingCycle) }>
+                        <i className="fa fa-trash"></i>
                     </button>
                 </td>
             </tr>
@@ -33,7 +36,7 @@ class BillingCycle extends Component {
                         <th>Name</th>
                         <th>Month</th>
                         <th>Year</th>
-                        <th>Action</th>
+                        <th className="table-action">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +48,7 @@ class BillingCycle extends Component {
 }
 
 const mapStateToProps = state => ({ list: state.billingCycles.list })
-const mapDispatchToProps = dispatch => bindActionCreators({ getList, showUpdate }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ getList, showTabWithData }, dispatch)
 
 export default connect(
     mapStateToProps,
