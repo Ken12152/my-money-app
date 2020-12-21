@@ -37,8 +37,13 @@ class ItemList extends Component {
                     </td>
                     <If test={ this.props.showStatus }>
                         <td>
-                            <Field name={`${this.props.field}[${index}].status`} component={ Input } 
-                                placeholder="Informe o status" readOnly={ this.props.readOnly } />
+                            <Field name={`${this.props.field}[${index}].status`} component="select" 
+                                className="form-control" placeholder="Informe o status" readOnly={ this.props.readOnly }>
+                                <option value="">---</option>
+                                <option value="PAGO">PAGO</option>
+                                <option value="PENDENTE">PENDENTE</option>
+                                <option value="AGENDADO">AGENDADO</option>
+                            </Field>
                         </td>
                     </If>
                     <td>
