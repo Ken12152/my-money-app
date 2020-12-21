@@ -9,16 +9,14 @@ import Input from '../common/form/Input'
 
 class ItemList extends Component {
 
-    add(index) {
-        this.props.arrayInsert('billingCycleForm', this.props.field, index, {})
-    }
-
-    clone(index, values) {
-        this.props.arrayInsert('billingCycleForm', this.props.field, index, values)
+    add(index, item = {}) {
+        if(!this.props.readOnly) {
+            this.props.arrayInsert('billingCycleForm', this.props.field, index, item)
+        }
     }
 
     remove(index) {
-        if(this.props.list.length > 1) {
+        if(!this.props.readOnly && this.props.list.length > 1) {
             this.props.arrayRemove('billingCycleForm', this.props.field, index)
         }
     }
@@ -31,23 +29,23 @@ class ItemList extends Component {
                 <tr key={ index }>
                     <td>
                         <Field name={`${this.props.field}[${index}].name`} component={ Input } 
-                            placeholder="ABCDEFG" readOnly={ this.props.readOnly } />
+                            placeholder="Informe o nome" readOnly={ this.props.readOnly } />
                     </td>
                     <td>
                         <Field name={`${this.props.field}[${index}].value`} component={ Input } 
-                            placeholder="ABCDEFG" readOnly={ this.props.readOnly } />
+                            placeholder="Informe o valor" readOnly={ this.props.readOnly } />
                     </td>
                     <If test={ this.props.showStatus }>
                         <td>
                             <Field name={`${this.props.field}[${index}].status`} component={ Input } 
-                                placeholder="ABCDEFG" readOnly={ this.props.readOnly } />
+                                placeholder="Informe o status" readOnly={ this.props.readOnly } />
                         </td>
                     </If>
                     <td>
                         <button type="button" className="btn btn-primary" onClick={ () => this.add(index + 1) }>
                             <i className="fa fa-plus"></i>
                         </button>
-                        <button type="button" className="btn btn-info" onClick={ () => this.clone(index + 1, item)}>
+                        <button type="button" className="btn btn-info" onClick={ () => this.add(index + 1, item)}>
                             <i className="fa fa-clone"></i>
                         </button>
                         <button type="button" className="btn btn-danger" onClick={ () => this.remove(index)}>
